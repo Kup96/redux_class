@@ -1,16 +1,30 @@
 import React, {useState} from "react";
-
-
+import {connect} from 'react-redux';
+import ACTION_TYPES from "../../actions/actionsType";
 const Counter = (props) => {
 //   const [value, setValue] = useState(0);
 
     return (
         <>
-            <h1>{value}</h1>
-            <button onClick = {dec}>-</button>
-            <button onClick = {inc}>+</button>
+            <h1>{props.value}</h1>
+            <button onClick = {props.dec}>-</button>
+            <button onClick = {props.inc}>+</button>
         </>
-    )
+    );
+};
+const mapStateToProps = (state) => {
+    const {value} = state;
+    return {
+        value,
+    };
 };
 
-export default Counter;
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dec: () => dispatch({ type: ACTION_TYPES.DECREMENT }),
+        inc: () => dispatch({ type: ACTION_TYPES.INCREMENT }),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
